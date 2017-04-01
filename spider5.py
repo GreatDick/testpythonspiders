@@ -5,6 +5,32 @@ data = {
     'username': 'guest',
     'password': 'guest',
 }
+def download(url, s):
+    import urllib, os
+    file_name = urllib.parse.unquote(url)
+    file_name = file_name[file_name.rfind('/') + 1:]
+    try:
+        r = s.get(url, stream=True, timeout = 2)
+        chunk_size = 1000
+        timer = 0
+        length = int(r.headers['Content-Length'])
+        print('downloading {}'.format(file_name))
+        if os.path.isfile('./' + file_name):
+                    print('  file already exist, skipped')
+                    return
+        with open('./' + file_name, 'wb') as f:
+            for chunk in r.iter_content(chunk_size):
+                timer += chunk_size
+                percent = round(timer/length, 4) * 100
+                print('\r {:4f}'.format((percent)), end = '')
+                f.write(chunk)
+        print('\r  finished    ')
+    except requests.exceptions.ReadTimeout:
+        print('read time out, this file failed to download')
+        return
+    except requests.exceptions.ConnectionError:
+        print('ConnectionError, this file failed to download')
+        return
 r=s.post('http://moodle.tipdm.com/login/index.php',data)
 #print(r.url)
 r = s.get('http://moodle.tipdm.com/course/view.php?id=16')
