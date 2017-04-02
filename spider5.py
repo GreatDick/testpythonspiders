@@ -1,5 +1,6 @@
-锘縤mport requests
+import requests
 from bs4 import BeautifulSoup
+import urllib
 s=requests.Session()
 data = {
     'username': 'guest',
@@ -36,11 +37,13 @@ r=s.post('http://moodle.tipdm.com/login/index.php',data)
 r = s.get('http://moodle.tipdm.com/course/view.php?id=16')
 soup=BeautifulSoup(r.text,'lxml')
 divs=soup.find_all('div',class_='activityinstance')
-for div in divs[1:]:  # 注意这里也出现了改动
+for div in divs[1:]: 
     url = div.a.get('href')
     r = s.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
     target_div = soup.find('div', class_='resourceworkaround')
     target_url = target_div.a.get('href')
-    print(target_url)
+ #print(target_url)
+    urllib.request.urlretrieve('http://moodle.tipdm.com/pluginfile.php/1583/mod_resource/content/1/5.3%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.mp4','1.mp4')
+            
 input()
