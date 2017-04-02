@@ -7,12 +7,12 @@ r = requests.get('http://www.qiushibaike.com', headers = headers)
 content = r.text
 soup = BeautifulSoup(content, 'lxml')
 divs = soup.find_all(class_ = 'article block untagged mb15')
-print(divs)
+#print(divs)
 for div in divs:
     if div.find_all(class_ = 'thumb'):
         continue
     joke = div.span.get_text()
-    # print(joke)
+    print(joke)
     #print('------')
 input()
 #f.write(joke.encode('UTF-8'))
