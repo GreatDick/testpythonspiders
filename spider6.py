@@ -11,11 +11,13 @@ def yiyan():
             #print(soup)
            au=soup.find('p',class_='text_author')
            ss=soup.select('p.text')
-           hito=ss[0].text
-           ko=ss[1].text
-           to=ss[2].text
-           print(hito+ko+to+au.get_text()+'\n')
+           y=ss[0].text
+           i=ss[1].text
+           yan=ss[2].text
+           print(y+i+yan+au.get_text()+'\n')
 #n=input('获取的条数:')
 #t=int(n)
 for i in range(1,10):
 	yiyan()
+	
+input('回车结束')
